@@ -1366,107 +1366,6 @@
             transition: opacity 0.3s;
         }
 
-        /* --- iOS下载提示样式 --- */
-        .ios-download-hint {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-            padding: 2rem;
-        }
-        
-        .ios-download-hint.visible {
-            display: flex;
-        }
-        
-        .ios-hint-content {
-            background: white;
-            border-radius: 20px;
-            padding: 2rem;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-        }
-        
-        .ios-hint-title {
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-        
-        .ios-hint-text {
-            font-size: 1rem;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-        
-        .ios-hint-image {
-            width: 100%;
-            max-width: 300px;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 1.5rem;
-            border: 2px solid var(--border-color);
-        }
-        
-        .ios-hint-steps {
-            text-align: left;
-            background: rgba(255, 182, 193, 0.1);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .ios-hint-steps ol {
-            margin: 0;
-            padding-left: 1.5rem;
-        }
-        
-        .ios-hint-steps li {
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-        
-        .ios-hint-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-        
-        .ios-hint-btn {
-            padding: 0.8rem 1.5rem;
-            border-radius: 25px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            min-height: 44px;
-        }
-        
-        .ios-hint-btn.primary {
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            color: white;
-        }
-        
-        .ios-hint-btn.secondary {
-            background: var(--border-color);
-            color: var(--text-primary);
-        }
-        
-        .ios-hint-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
         /* --- 响应式设计 --- */
         @media (max-width: 768px) {
             .home-header h1 {
@@ -1711,30 +1610,6 @@
         <div class="activation-info">
             如需获取激活码，请联系<br>
             <strong>淘宝店铺：大师精品资料</strong>
-        </div>
-    </div>
-</div>
-
-<!-- iOS下载提示弹窗 -->
-<div class="ios-download-hint" id="ios-download-hint">
-    <div class="ios-hint-content">
-        <h3 class="ios-hint-title">📱 iOS下载提示</h3>
-        <p class="ios-hint-text">由于iOS系统限制，请按以下步骤保存图纸：</p>
-        
-        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 200'%3E%3Crect width='300' height='200' fill='%23f0f0f0'/%3E%3Ctext x='150' y='100' text-anchor='middle' font-size='14' fill='%23666'%3E长按图片保存到相册%3C/text%3E%3C/svg%3E" alt="保存提示" class="ios-hint-image">
-        
-        <div class="ios-hint-steps">
-            <ol>
-                <li>点击下方"查看图片"按钮</li>
-                <li>在新页面中长按图片</li>
-                <li>选择"存储到相册"</li>
-                <li>在相册中找到保存的图纸</li>
-            </ol>
-        </div>
-        
-        <div class="ios-hint-buttons">
-            <button class="ios-hint-btn secondary" id="ios-hint-close">关闭</button>
-            <button class="ios-hint-btn primary" id="ios-hint-view">查看图片</button>
         </div>
     </div>
 </div>
@@ -2254,112 +2129,6 @@ window.resetActivation = function() {
     }
 };
 
-// --- iOS 下载修复函数 ---
-
-// 检测是否为iOS设备
-function isIOS() {
-    return [
-        'iPad Simulator',
-        'iPhone Simulator',
-        'iPod Simulator',
-        'iPad',
-        'iPhone',
-        'iPod'
-    ].includes(navigator.platform) ||
-    (navigator.userAgent.includes("Mac") && "ontouchend" in document) ||
-    (navigator.userAgent.includes('iPhone') || navigator.userAgent.includes('iPad') || navigator.userAgent.includes('iPod'));
-}
-
-// iOS下载函数 - 修复版本
-function downloadPatternForIOS(canvas, filename) {
-    console.log('使用iOS下载方法');
-    
-    // 使用toBlob生成Blob对象
-    canvas.toBlob(function(blob) {
-        if (!blob) {
-            console.error('生成Blob失败');
-            alert('图片生成失败，请重试');
-            return;
-        }
-        
-        // 创建临时URL
-        const url = URL.createObjectURL(blob);
-        
-        // 显示iOS下载提示
-        const iosHint = document.getElementById('ios-download-hint');
-        const viewBtn = document.getElementById('ios-hint-view');
-        const closeBtn = document.getElementById('ios-hint-close');
-        
-        // 设置查看按钮的点击事件
-        viewBtn.onclick = function() {
-            // 在新窗口中打开图片
-            window.open(url, '_blank');
-            
-            // 关闭提示
-            iosHint.classList.remove('visible');
-            
-            // 延迟清理URL，给用户足够时间查看
-            setTimeout(() => {
-                URL.revokeObjectURL(url);
-            }, 10000);
-        };
-        
-        // 设置关闭按钮的点击事件
-        closeBtn.onclick = function() {
-            iosHint.classList.remove('visible');
-            URL.revokeObjectURL(url);
-        };
-        
-        // 显示提示
-        iosHint.classList.add('visible');
-        
-    }, 'image/png', 0.95);
-}
-
-// 通用下载函数 - 支持所有平台
-function downloadPatternUniversal(canvas, filename) {
-    console.log('使用通用下载方法');
-    
-    // 检测iOS设备
-    if (isIOS()) {
-        downloadPatternForIOS(canvas, filename);
-        return;
-    }
-    
-    // 非iOS设备使用标准下载方法
-    try {
-        canvas.toBlob(function(blob) {
-            if (!blob) {
-                console.error('生成Blob失败');
-                alert('图片生成失败，请重试');
-                return;
-            }
-            
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.download = filename;
-            link.href = url;
-            
-            // 确保链接被添加到DOM中
-            document.body.appendChild(link);
-            
-            // 触发点击事件
-            link.click();
-            
-            // 清理
-            setTimeout(() => {
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-            }, 100);
-            
-        }, 'image/png', 0.95);
-        
-    } catch (error) {
-        console.error('下载失败:', error);
-        alert('下载失败，请重试');
-    }
-}
-
 // --- Data & Configuration (All Brand Palettes) ---
 
 // MARD色板
@@ -2434,7 +2203,7 @@ const BRAND_COLORS = {
         "M11": "#F3ECC9", "M12": "#E6EEF2", "M13": "#AACBEF", "M14": "#3376B0", "M15": "#668575", 
         "M16": "#FEBF45", "M17": "#FEA324", "M18": "#FEB89F", "M19": "#FFE0E9", "M20": "#FEBECF", 
         "M21": "#ECBEBF", "M22": "#E4A89F", "M23": "#A56268", "W3": "#F2A5E8", "W4": "#E9EC91", 
-        "W1": "#FFFF00", "W2": "#FFEBFA", "W5": "#76CEDE", "T1": "#D50D21", "N1": "#F92F83", 
+        "W1": "#FFFF00", "W2": "#FFEBFA", "W5": "#76CEDE", "L01": "#D50D21", "N1": "#F92F83", 
         "N2": "#FD8324", "N3": "#F8EC31", "N4": "#35C75B", "T4": "#23B891", "T5": "#19779D", 
         "T3": "#1A60C3", "T2": "#9A56B4", "T6": "#FFDB4C", "L2": "#FFEBFA", "L7": "#D8D5CE", 
         "L7": "#55514C", "S1": "#9FE4DF", "S5": "#77CEE9", "S4": "#3ECFCA", "S11": "#4A867A", 
@@ -4928,7 +4697,7 @@ const initializeLineEnhancement = () => {
     }
 };
 
-// 修复下载功能 - iOS兼容版本
+// 修复下载功能 - 保持原有画布尺寸，只修复苹果微信浏览器下载问题
 const downloadPattern = (isEditMode = false) => {
     if (!state.colorData || state.colorData.length === 0) {
         alert('请先生成图纸');
@@ -4938,17 +4707,14 @@ const downloadPattern = (isEditMode = false) => {
     console.log('开始下载图纸...');
     
     try {
-        // 创建高分辨率画布 - 优化iOS内存使用
+        // 创建高分辨率画布 - 保持原有尺寸计算
         const canvas = document.createElement('canvas'); 
         const ctx = canvas.getContext('2d');
+        const hdCellSize = 50; // 高清图纸的单元格大小
+        const coordSize = state.showCoords ? 200 : 40;
+        const padding = state.showCoords ? 300 : 80;
         
-        // 对于iOS，降低分辨率以避免内存问题
-        const isIOSDevice = isIOS();
-        const hdCellSize = isIOSDevice ? 30 : 50; // iOS使用更小的单元格大小
-        const coordSize = state.showCoords ? 120 : 30; // iOS减小坐标尺寸
-        const padding = state.showCoords ? 150 : 40; // iOS减小内边距
-        
-        // 计算实际内容边界
+        // 计算实际内容边界 - 保持原有逻辑
         let minX = state.colorData[0].length;
         let maxX = 0;
         let minY = state.colorData.length;
@@ -4978,17 +4744,17 @@ const downloadPattern = (isEditMode = false) => {
         const actualWidth = maxX - minX + 1;
         const actualHeight = maxY - minY + 1;
         
-        // 计算材料表所需空间
+        // 计算材料表所需空间 - 保持原有逻辑
         const sorted = Object.entries(state.colorCounts).sort((a,b)=>b[1]-a[1]);
-        const itemsPerRow = Math.floor(isIOSDevice ? 800 / 120 : 1080 / 150); // iOS减小尺寸
+        const itemsPerRow = Math.floor(1080 / 150); // 适配手机屏幕宽度
         const rowsNeeded = Math.ceil(sorted.length / itemsPerRow);
-        const listHeight = rowsNeeded * (isIOSDevice ? 80 : 110) + (isIOSDevice ? 80 : 100);
+        const listHeight = rowsNeeded * 110 + 100; // 每行高度110px，加上标题间距
         
-        // 重新计算画布高度 - iOS使用更小的尺寸
-        canvas.width = Math.min(isIOSDevice ? 800 : 1080, Math.max(actualWidth * hdCellSize + padding, 300));
-        canvas.height = actualHeight * hdCellSize + padding + listHeight + (isIOSDevice ? 150 : 200);
+        // 保持原有的画布尺寸计算逻辑
+        canvas.width = Math.max(1080, actualWidth * hdCellSize + padding); // 最小宽度1080px适配手机
+        canvas.height = actualHeight * hdCellSize + padding + listHeight + 200; // 增加额外空间确保材料表完整显示
         
-        console.log(`画布尺寸 (iOS: ${isIOSDevice}): ${canvas.width} x ${canvas.height}`);
+        console.log(`画布尺寸: ${canvas.width} x ${canvas.height}`);
         
         // 设置背景
         ctx.imageSmoothingEnabled = false;
@@ -4997,7 +4763,7 @@ const downloadPattern = (isEditMode = false) => {
         
         // 绘制坐标标签
         if (state.showCoords) {
-            ctx.font = `bold ${isIOSDevice ? 24 : 32}px Arial`; 
+            ctx.font = 'bold 32px Arial'; 
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
             ctx.fillStyle = '#333';
@@ -5005,25 +4771,26 @@ const downloadPattern = (isEditMode = false) => {
             for(let x = minX; x <= maxX; x++) {
                 const label = (x + 1).toString();
                 const xPos = (x - minX) * hdCellSize + hdCellSize/2 + padding/2;
-                ctx.fillText(label, xPos, padding/2 - (isIOSDevice ? 30 : 40));
+                ctx.fillText(label, xPos, padding/2 - 40);
             }
             
             for(let y = minY; y <= maxY; y++) {
                 const label = (y + 1).toString();
                 const yPos = (y - minY) * hdCellSize + hdCellSize/2 + padding/2;
-                ctx.fillText(label, padding/2 - (isIOSDevice ? 30 : 40), yPos);
+                ctx.fillText(label, padding/2 - 40, yPos);
             }
         }
 
         // 绘制图案
-        const offsetX = state.showCoords ? padding/2 : 20;
-        const offsetY = state.showCoords ? padding/2 : 20;
+        const offsetX = state.showCoords ? padding/2 : 40;
+        const offsetY = state.showCoords ? padding/2 : 40;
         
         for(let y = minY; y <= maxY; y++) {
             for(let x = minX; x <= maxX; x++) {
                 const key = state.colorData[y][x];
                 if (!key) continue;
                 
+                // 使用基础单元格大小计算位置
                 const px = (x - minX) * hdCellSize + offsetX;
                 const py = (y - minY) * hdCellSize + offsetY;
                 
@@ -5059,7 +4826,7 @@ const downloadPattern = (isEditMode = false) => {
                 // 绘制网格
                 if (state.showGrid) {
                     ctx.strokeStyle = '#ddd';
-                    ctx.lineWidth = 1;
+                    ctx.lineWidth = 2;
                     ctx.strokeRect(px, py, hdCellSize, hdCellSize);
                 }
                 
@@ -5073,7 +4840,7 @@ const downloadPattern = (isEditMode = false) => {
                     ctx.lineWidth = 1;
                 }
                 
-                // 绘制色号 - iOS减小字体
+                // 绘制色号
                 if (state.showColors && !(state.externalBackground[y] && state.externalBackground[y][x]) && !state.hiddenColors.has(key)) {
                     const color = BRAND_COLORS[state.currentBrand][key];
                     if (color) {
@@ -5081,7 +4848,7 @@ const downloadPattern = (isEditMode = false) => {
                         const brightness = (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
                         ctx.fillStyle = brightness > 140 ? '#000' : '#fff';
                         
-                        const fontSize = Math.min(hdCellSize * 0.4, isIOSDevice ? 14 : 18);
+                        const fontSize = Math.min(hdCellSize * 0.4, 18);
                         ctx.font = `bold ${fontSize}px Arial`;
                         ctx.textAlign = 'center'; 
                         ctx.textBaseline = 'middle';
@@ -5093,23 +4860,23 @@ const downloadPattern = (isEditMode = false) => {
             }
         }
         
-        // 绘制材料清单 - iOS优化
-        const listY = actualHeight * hdCellSize + offsetY + (isIOSDevice ? 30 : 50);
-        ctx.font = `bold ${isIOSDevice ? 18 : 24}px Arial`;
+        // 绘制材料清单
+        const listY = actualHeight * hdCellSize + offsetY + 50;
+        ctx.font = 'bold 24px Arial';
         ctx.fillStyle = '#333';
         ctx.textAlign = 'left';
-        ctx.fillText('📦 材料清单:', 30, listY);
+        ctx.fillText('📦 材料清单:', 50, listY);
         
-        // iOS优化材料表布局
-        const itemWidth = isIOSDevice ? 100 : 140;
-        const itemHeight = isIOSDevice ? 60 : 90;
-        const itemsPerRowFixed = Math.floor((canvas.width - 60) / (itemWidth + 20));
+        // 重新计算材料表布局 - 确保在手机上完整显示
+        const itemWidth = 140;
+        const itemHeight = 90;
+        const itemsPerRowFixed = Math.floor((canvas.width - 100) / (itemWidth + 20));
         
         sorted.forEach(([key, count], index) => {
             const col = index % itemsPerRowFixed;
             const row = Math.floor(index / itemsPerRowFixed);
-            const itemX = 30 + col * (itemWidth + 20);
-            const itemY = listY + (isIOSDevice ? 30 : 50) + row * (itemHeight + 20);
+            const itemX = 50 + col * (itemWidth + 20);
+            const itemY = listY + 50 + row * (itemHeight + 20);
             
             // 确保不会超出画布底部
             if (itemY + itemHeight > canvas.height - 50) {
@@ -5120,32 +4887,182 @@ const downloadPattern = (isEditMode = false) => {
             const color = BRAND_COLORS[state.currentBrand][key];
             if (color) {
                 ctx.fillStyle = color;
-                const swatchSize = isIOSDevice ? 30 : 45;
-                ctx.fillRect(itemX, itemY, swatchSize, swatchSize);
+                ctx.fillRect(itemX, itemY, 45, 45);
                 ctx.strokeStyle = '#333';
                 ctx.lineWidth = 2;
-                ctx.strokeRect(itemX, itemY, swatchSize, swatchSize);
+                ctx.strokeRect(itemX, itemY, 45, 45);
             }
             
             ctx.fillStyle = '#333';
-            ctx.font = `bold ${isIOSDevice ? 14 : 18}px Arial`;
+            ctx.font = 'bold 18px Arial';
             ctx.textAlign = 'left';
-            ctx.fillText(key, itemX + (isIOSDevice ? 40 : 55), itemY + (isIOSDevice ? 15 : 20));
-            ctx.font = `bold ${isIOSDevice ? 12 : 16}px Arial`;
-            ctx.fillText(`×${count}`, itemX + (isIOSDevice ? 40 : 55), itemY + (isIOSDevice ? 30 : 45));
+            ctx.fillText(key, itemX + 55, itemY + 20);
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText(`×${count}`, itemX + 55, itemY + 45);
         });
         
-        // 绘制版权信息 - iOS优化
-        ctx.font = `${isIOSDevice ? 12 : 14}px Arial`;
+        // 绘制版权信息
+        ctx.font = '14px Arial';
         ctx.fillStyle = '#666';
         ctx.textAlign = 'center';
-        ctx.fillText('拼豆图纸生成器-西瓜哥制作', canvas.width/2, canvas.height - (isIOSDevice ? 40 : 60));
-        ctx.fillText('版权已登记，仅授权于淘宝店铺：大师精品资料', canvas.width/2, canvas.height - (isIOSDevice ? 20 : 35));
+        ctx.fillText('拼豆图纸生成器-西瓜哥制作', canvas.width/2, canvas.height - 60);
+        ctx.fillText('版权已登记，仅授权于淘宝店铺：大师精品资料', canvas.width/2, canvas.height - 35);
         
-        // 使用iOS兼容的下载方法
-        downloadPatternUniversal(canvas, `拼豆图纸_${state.currentBrand}_${new Date().getTime()}.png`);
+        // 修复：增强的下载兼容性处理 - 只修复苹果微信浏览器问题
+        const timestamp = new Date().getTime();
+        const filename = `拼豆图纸_${state.currentBrand}_${timestamp}.png`;
         
-        console.log('图纸下载完成');
+        // 检测是否在微信iOS环境中
+        const isWeixin = /MicroMessenger/i.test(navigator.userAgent);
+        const isIOS = /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
+        
+        if (isWeixin && isIOS) {
+            // 微信iOS特殊处理
+            console.log('检测到微信iOS环境，使用特殊下载方式');
+            
+            // 转换为高质量图片
+            const dataUrl = canvas.toDataURL('image/png', 1.0);
+            
+            // 创建新窗口显示图片
+            const newWindow = window.open('', '_blank');
+            if (newWindow) {
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                        <head>
+                            <title>${filename}</title>
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <style>
+                                body {
+                                    margin: 0;
+                                    padding: 20px;
+                                    text-align: center;
+                                    background-color: #f5f5f5;
+                                    font-family: Arial, sans-serif;
+                                }
+                                .header {
+                                    margin-bottom: 20px;
+                                    padding: 15px;
+                                    background: white;
+                                    border-radius: 8px;
+                                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                                }
+                                .instructions {
+                                    color: #333;
+                                    margin: 10px 0;
+                                    font-size: 16px;
+                                }
+                                .highlight {
+                                    color: #ff6b35;
+                                    font-weight: bold;
+                                }
+                                .image-container {
+                                    display: inline-block;
+                                    max-width: 100%;
+                                    border: 2px solid #ddd;
+                                    border-radius: 8px;
+                                    overflow: hidden;
+                                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                                }
+                                .image-container img {
+                                    max-width: 100%;
+                                    height: auto;
+                                    display: block;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="header">
+                                <h2>🎨 拼豆图纸生成成功！</h2>
+                                <p class="instructions">请<span class="highlight">长按下方图片</span>保存到相册</p>
+                                <p class="instructions">或点击右上角 "..." 选择 "保存图片"</p>
+                            </div>
+                            <div class="image-container">
+                                <img src="${dataUrl}" alt="${filename}" />
+                            </div>
+                            <div class="header" style="margin-top: 20px;">
+                                <p style="font-size: 14px; color: #666;">拼豆图纸生成器-西瓜哥制作</p>
+                            </div>
+                        </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            } else {
+                // 如果新窗口打开失败，显示提示
+                alert('请在浏览器中长按保存图片');
+                // 在当前页面显示图片
+                const img = new Image();
+                img.src = dataUrl;
+                img.style.maxWidth = '100%';
+                img.style.border = '2px solid #ddd';
+                img.style.borderRadius = '8px';
+                
+                const modal = document.createElement('div');
+                modal.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10000;
+                    padding: 20px;
+                `;
+                
+                modal.innerHTML = `
+                    <div style="background: white; padding: 20px; border-radius: 8px; max-width: 90%; max-height: 90%; overflow: auto;">
+                        <h3 style="margin-top: 0;">请长按保存图片</h3>
+                    </div>
+                `;
+                
+                modal.querySelector('div').appendChild(img);
+                document.body.appendChild(modal);
+                
+                modal.onclick = () => {
+                    document.body.removeChild(modal);
+                };
+            }
+        } else {
+            // 标准下载方式
+            console.log('使用标准下载方式');
+            
+            // 转换为Blob
+            canvas.toBlob((blob) => {
+                if (blob && blob.size > 0) {
+                    console.log('Blob生成成功，大小:', blob.size, 'bytes');
+                    
+                    // 创建下载链接
+                    if (navigator.msSaveBlob) {
+                        // IE/Edge
+                        navigator.msSaveBlob(blob, filename);
+                    } else {
+                        // 现代浏览器
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.download = filename;
+                        link.href = url;
+                        
+                        // 添加到DOM并触发点击
+                        document.body.appendChild(link);
+                        link.click();
+                        
+                        // 清理
+                        setTimeout(() => {
+                            document.body.removeChild(link);
+                            URL.revokeObjectURL(url);
+                        }, 100);
+                    }
+                } else {
+                    console.error('Blob生成失败或为空');
+                    throw new Error('图片生成失败');
+                }
+            }, 'image/png', 1.0);
+        }
+        
+        console.log('图纸下载处理完成');
         
     } catch (error) {
         console.error('下载失败:', error);
@@ -5153,18 +5070,187 @@ const downloadPattern = (isEditMode = false) => {
     }
 };
 
-// 添加辅助函数计算合并区域数
-function countMergedRegions(originalData, mergedData) {
-    let count = 0;
-    for (let y = 0; y < originalData.length; y++) {
-        for (let x = 0; x < originalData[y].length; x++) {
-            if (originalData[y][x] !== mergedData[y][x]) {
-                count++;
-            }
-        }
+// 修复下载统计图功能 - 保持原有画布尺寸逻辑
+const downloadStatistics = () => {
+    if (!state.colorData || state.colorData.length === 0) {
+        alert('请先生成图纸');
+        return;
     }
-    return count;
-}
+    
+    console.log('开始下载统计图...');
+    
+    try {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // 保持原有的统计图画布尺寸计算
+        canvas.width = 1200;
+        canvas.height = 800;
+        
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // 绘制统计图内容
+        const sorted = Object.entries(state.colorCounts).sort((a,b)=>b[1]-a[1]);
+        const maxCount = Math.max(...sorted.map(([,count]) => count));
+        
+        // 标题
+        ctx.font = 'bold 28px Arial';
+        ctx.fillStyle = '#333';
+        ctx.textAlign = 'center';
+        ctx.fillText('📊 拼豆颜色使用统计', canvas.width/2, 50);
+        
+        // 绘制柱状图
+        const barWidth = Math.min(60, (canvas.width - 200) / sorted.length);
+        const barSpacing = 10;
+        const chartHeight = canvas.height - 200;
+        const startX = 100;
+        const startY = canvas.height - 100;
+        
+        sorted.forEach(([key, count], index) => {
+            const barHeight = (count / maxCount) * chartHeight;
+            const x = startX + index * (barWidth + barSpacing);
+            const y = startY - barHeight;
+            
+            // 绘制柱子
+            const color = BRAND_COLORS[state.currentBrand][key];
+            ctx.fillStyle = color || '#ccc';
+            ctx.fillRect(x, y, barWidth, barHeight);
+            
+            // 绘制边框
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x, y, barWidth, barHeight);
+            
+            // 绘制标签
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(key, x + barWidth/2, startY + 20);
+            
+            // 绘制数值
+            ctx.fillText(count.toString(), x + barWidth/2, y - 10);
+        });
+        
+        // 绘制坐标轴
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(startX - 10, startY);
+        ctx.lineTo(canvas.width - 50, startY);
+        ctx.stroke();
+        
+        ctx.beginPath();
+        ctx.moveTo(startX - 10, startY);
+        ctx.lineTo(startX - 10, 100);
+        ctx.stroke();
+        
+        // 版权信息
+        ctx.font = '12px Arial';
+        ctx.fillStyle = '#666';
+        ctx.textAlign = 'center';
+        ctx.fillText('拼豆图纸生成器-西瓜哥制作', canvas.width/2, canvas.height - 30);
+        
+        // 下载处理 - 修复苹果微信浏览器问题
+        const timestamp = new Date().getTime();
+        const filename = `拼豆统计图_${timestamp}.png`;
+        
+        // 检测微信iOS环境
+        const isWeixin = /MicroMessenger/i.test(navigator.userAgent);
+        const isIOS = /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent);
+        
+        if (isWeixin && isIOS) {
+            // 微信iOS特殊处理
+            const dataUrl = canvas.toDataURL('image/png', 1.0);
+            const newWindow = window.open();
+            newWindow.document.write(`
+                <html>
+                    <head><title>${filename}</title></head>
+                    <body style="margin:0;padding:20px;text-align:center;">
+                        <h3>请长按保存统计图</h3>
+                        <img src="${dataUrl}" style="max-width:100%;border:1px solid #ddd;" />
+                    </body>
+                </html>
+            `);
+        } else {
+            // 标准下载
+            canvas.toBlob((blob) => {
+                if (blob && blob.size > 0) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = filename;
+                    link.href = url;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                }
+            }, 'image/png', 1.0);
+        }
+        
+    } catch (error) {
+        console.error('统计图下载失败:', error);
+        alert('下载失败，请重试');
+    }
+};
+
+// 修复事件绑定 - 确保功能正常
+document.addEventListener('DOMContentLoaded', function() {
+    // 下载统计图
+    const downloadStatsBtn = document.getElementById('download-stats-btn');
+    if (downloadStatsBtn) {
+        downloadStatsBtn.addEventListener('click', downloadStatistics);
+    }
+    
+    // 查看材料清单
+    const toggleListBtn = document.getElementById('toggle-list-btn');
+    const shoppingList = document.getElementById('shopping-list');
+    
+    if (toggleListBtn && shoppingList) {
+        toggleListBtn.addEventListener('click', () => {
+            if (!state.colorData || state.colorData.length === 0) {
+                alert('请先生成图纸');
+                return;
+            }
+            
+            if (shoppingList.classList.contains('visible')) {
+                shoppingList.classList.remove('visible');
+                toggleListBtn.textContent = '📦 查看材料清单';
+            } else {
+                shoppingList.classList.add('visible');
+                toggleListBtn.textContent = '📦 隐藏材料清单';
+            }
+        });
+    }
+    
+    // 编辑模式下载按钮
+    const editDownloadBtn = document.getElementById('edit-download-btn');
+    if (editDownloadBtn) {
+        editDownloadBtn.addEventListener('click', () => {
+            downloadPattern(true);
+        });
+    }
+    
+    // 主下载按钮
+    const downloadBtn = document.getElementById('download-btn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', () => {
+            downloadPattern(false);
+        });
+    }
+});
+
+// 移除原有的事件监听器绑定，避免重复
+// 注释掉原来的下载按钮绑定
+/*
+document.getElementById('download-btn')?.addEventListener('click', () => {
+    downloadPattern(false);
+});
+
+document.getElementById('edit-download-btn')?.addEventListener('click', () => {
+    downloadPattern(true);
+});
+*/
 
 // 修复：确保输入框样式支持移动端
 function fixInputStyles() {
@@ -5199,6 +5285,19 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('load', function() {
     setTimeout(fixInputStyles, 100);
 });
+
+// 添加辅助函数计算合并区域数
+function countMergedRegions(originalData, mergedData) {
+    let count = 0;
+    for (let y = 0; y < originalData.length; y++) {
+        for (let x = 0; x < originalData[y].length; x++) {
+            if (originalData[y][x] !== mergedData[y][x]) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
 
 // 初始化主事件监听器
 document.addEventListener('DOMContentLoaded', function() {
@@ -5352,22 +5451,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('edit-mode-screen').style.display = 'none';
             document.getElementById('app-screen').style.display = 'block';
             document.getElementById('home-screen').style.display = 'none';
-        });
-    }
-    
-    // iOS下载提示弹窗事件绑定
-    const iosHintClose = document.getElementById('ios-hint-close');
-    const iosHintView = document.getElementById('ios-hint-view');
-    
-    if (iosHintClose) {
-        iosHintClose.addEventListener('click', () => {
-            document.getElementById('ios-download-hint').classList.remove('visible');
-        });
-    }
-    
-    if (iosHintView) {
-        iosHintView.addEventListener('click', () => {
-            // 这里会被动态设置
         });
     }
     
