@@ -1,24 +1,159 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>拼豆图纸生成器-可爱粉红版</title>
+    <title>西瓜拼豆 - 拼豆图纸生成器</title>
     <style>
-        /* --- 粉红色可爱风格全局样式 --- */
+        /* --- 西瓜拼豆现代极简风格 --- */
+        /* 1.txt 核心UI样式 */
+        .phone-container {
+            width: 375px;
+            min-height: 812px;
+            background: linear-gradient(180deg, #F0F6FF 0%, #FFFFFF 60%, #FFFFFF 100%);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(50, 50, 93, 0.15), 0 15px 35px rgba(0, 0, 0, 0.05);
+            margin: 2rem auto;
+            overflow: hidden;
+        }
+
+        .home-indicator {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 134px;
+            height: 5px;
+            background: #000;
+            border-radius: 100px;
+            opacity: 0.2;
+        }
+
+        /* Logo 容器 */
+        .logo-container {
+            width: 180px;
+            height: 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        /* 西瓜像素画 */
+        .pixel-art-wrapper {
+            font-size: 11px;
+            width: 1em;
+            height: 1em;
+            position: relative;
+            transform: translate(-9em, -8em);
+        }
+        
+        .pixel-watermelon {
+            width: 1em;
+            height: 1em;
+            position: absolute;
+            background: transparent;
+            box-shadow: 
+                6em 1em 0 #225930, 7em 1em 0 #225930, 8em 1em 0 #225930, 9em 1em 0 #225930, 10em 1em 0 #225930, 11em 1em 0 #225930, 12em 1em 0 #225930,
+                5em 2em 0 #225930, 6em 2em 0 #5bc24e, 7em 2em 0 #5bc24e, 8em 2em 0 #5bc24e, 9em 2em 0 #225930, 10em 2em 0 #5bc24e, 11em 2em 0 #5bc24e, 12em 2em 0 #5bc24e, 13em 2em 0 #225930, 
+                10em 0em 0 #225930, 11em 0em 0 #225930, 11em 1em 0 #225930, 12em 0em 0 #225930,
+                4em 3em 0 #225930, 5em 3em 0 #5bc24e, 6em 3em 0 #5bc24e, 7em 3em 0 #225930, 8em 3em 0 #5bc24e, 9em 3em 0 #5bc24e, 10em 3em 0 #225930, 11em 3em 0 #5bc24e, 12em 3em 0 #5bc24e, 13em 3em 0 #5bc24e, 14em 3em 0 #225930,
+                3em 4em 0 #225930, 4em 4em 0 #5bc24e, 5em 4em 0 #225930, 6em 4em 0 #5bc24e, 7em 4em 0 #5bc24e, 8em 4em 0 #225930, 9em 4em 0 #5bc24e, 10em 4em 0 #5bc24e, 11em 4em 0 #225930, 12em 4em 0 #fcfcfc, 13em 4em 0 #fcfcfc, 14em 4em 0 #5bc24e, 15em 4em 0 #225930,
+                3em 5em 0 #225930, 4em 5em 0 #5bc24e, 5em 5em 0 #225930, 6em 5em 0 #5bc24e, 7em 5em 0 #5bc24e, 8em 5em 0 #225930, 9em 5em 0 #5bc24e, 10em 5em 0 #5bc24e, 11em 5em 0 #225930, 12em 5em 0 #fcfcfc, 13em 5em 0 #fcfcfc, 14em 5em 0 #5bc24e, 15em 5em 0 #225930,
+                3em 6em 0 #225930, 4em 6em 0 #5bc24e, 5em 6em 0 #225930, 6em 6em 0 #5bc24e, 7em 6em 0 #5bc24e, 8em 6em 0 #225930, 9em 6em 0 #5bc24e, 10em 6em 0 #5bc24e, 11em 6em 0 #225930, 12em 6em 0 #5bc24e, 13em 6em 0 #5bc24e, 14em 6em 0 #5bc24e, 15em 6em 0 #225930,
+                3em 7em 0 #225930, 4em 7em 0 #5bc24e, 5em 7em 0 #225930, 6em 7em 0 #5bc24e, 7em 7em 0 #5bc24e, 8em 7em 0 #225930, 9em 7em 0 #5bc24e, 10em 7em 0 #5bc24e, 11em 7em 0 #225930, 12em 7em 0 #5bc24e, 13em 7em 0 #5bc24e, 14em 7em 0 #5bc24e, 15em 7em 0 #225930,
+                3em 8em 0 #225930, 4em 8em 0 #5bc24e, 5em 8em 0 #225930, 6em 8em 0 #5bc24e, 7em 8em 0 #5bc24e, 8em 8em 0 #225930, 9em 8em 0 #5bc24e, 10em 8em 0 #5bc24e, 11em 8em 0 #225930, 12em 8em 0 #5bc24e, 13em 8em 0 #5bc24e, 14em 8em 0 #5bc24e, 15em 8em 0 #225930,
+                3em 9em 0 #225930, 4em 9em 0 #f64c4d, 5em 9em 0 #f64c4d, 6em 9em 0 #f64c4d, 7em 9em 0 #f64c4d, 8em 9em 0 #f64c4d, 9em 9em 0 #f64c4d, 10em 9em 0 #f64c4d, 11em 9em 0 #f64c4d, 12em 9em 0 #f64c4d, 13em 9em 0 #f64c4d, 14em 9em 0 #f64c4d, 15em 9em 0 #225930,
+                3em 10em 0 #225930, 4em 10em 0 #f64c4d, 5em 10em 0 #f64c4d, 6em 10em 0 #631413, 7em 10em 0 #f64c4d, 8em 10em 0 #f64c4d, 9em 10em 0 #f64c4d, 10em 10em 0 #f64c4d, 11em 10em 0 #f64c4d, 12em 10em 0 #631413, 13em 10em 0 #f64c4d, 14em 10em 0 #f64c4d, 15em 10em 0 #225930,
+                4em 11em 0 #225930, 5em 11em 0 #f64c4d, 6em 11em 0 #f64c4d, 7em 11em 0 #f64c4d, 8em 11em 0 #f64c4d, 9em 11em 0 #f64c4d, 10em 11em 0 #f64c4d, 11em 11em 0 #f64c4d, 12em 11em 0 #f64c4d, 13em 11em 0 #f64c4d, 14em 11em 0 #225930,
+                4em 12em 0 #225930, 5em 12em 0 #d0e6b6, 6em 12em 0 #f64c4d, 7em 12em 0 #f64c4d, 8em 12em 0 #631413, 9em 12em 0 #f64c4d, 10em 12em 0 #f64c4d, 11em 12em 0 #631413, 12em 12em 0 #f64c4d, 13em 12em 0 #d0e6b6, 14em 12em 0 #225930,
+                5em 13em 0 #225930, 6em 13em 0 #d0e6b6, 7em 13em 0 #d0e6b6, 8em 13em 0 #f64c4d, 9em 13em 0 #f64c4d, 10em 13em 0 #f64c4d, 11em 13em 0 #d0e6b6, 12em 13em 0 #d0e6b6, 13em 13em 0 #225930,
+                6em 14em 0 #225930, 7em 14em 0 #225930, 8em 14em 0 #225930, 9em 14em 0 #225930, 10em 14em 0 #225930, 11em 14em 0 #225930, 12em 14em 0 #225930;
+        }
+
+        /* 内容区域 - 修改为垂直居中 */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 80px;
+            z-index: 10;
+            width: 100%;
+        }
+
+        /* 大标题 */
+        .content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1A1A1A;
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+            text-align: center;
+        }
+
+        /* 副标题 */
+        .subtitle {
+            font-size: 0.95rem;
+            color: #888888;
+            font-weight: 400;
+            text-align: center;
+            line-height: 1.6;
+            max-width: 280px;
+        }
+
+        /* 底部区域 */
+        .bottom-area {
+            position: absolute;
+            bottom: 40px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+            z-index: 10;
+        }
+
+        /* 开始创作按钮 */
+        .start-btn {
+            background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 1rem 3rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.5);
+        }
+
+        /* 原有样式继续 */
         :root {
-            --primary-color: #FF69B4; /* 热情粉红 */
-            --primary-hover: #FF1493; /* 深粉红 */
-            --accent-color: #FFB6C1; /* 浅粉红 */
-            --bg-primary: #FFF0F5; /* 薰衣草红背景 */
+            --primary-color: #3B82F6; /* 皇家蓝 */
+            --primary-hover: #2563EB; /* 深蓝 */
+            --accent-color: #60A5FA; /* 浅蓝 */
+            --bg-primary: #EFF1F5; /* 极浅冷灰蓝背景 */
             --bg-secondary: #FFFFFF;
-            --text-primary: #2C3E50;
-            --text-secondary: #FF69B4;
-            --border-color: #FFB6C1;
-            --shadow-sm: 0 4px 8px rgba(255, 105, 180, 0.15);
-            --shadow-md: 0 8px 16px rgba(255, 105, 180, 0.2);
-            --shadow-lg: 0 12px 24px rgba(255, 105, 180, 0.25);
-            --radius: 15px;
+            --text-primary: #1A1A1A; /* 深黑色 */
+            --text-secondary: #888888; /* 中灰色 */
+            --border-color: #E5E7EB;
+            --shadow-sm: 0 2px 8px rgba(59, 130, 246, 0.1);
+            --shadow-md: 0 4px 16px rgba(59, 130, 246, 0.15);
+            --shadow-lg: 0 8px 24px rgba(59, 130, 246, 0.2);
+            --radius: 20px;
             --header-height: 70px;
             --tools-height: 15vh;
         }
@@ -30,8 +165,8 @@
         }
         
         body { 
-            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFD1DC 100%); 
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: #EFF1F5; 
             color: var(--text-primary); 
             line-height: 1.6;
             overflow-x: hidden;
@@ -40,177 +175,154 @@
         
         h1, h2, h3 { 
             font-weight: 700; 
-            color: var(--primary-color);
-            text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.3);
+            color: var(--text-primary);
         }
         
         button { 
             cursor: pointer; 
             border: none; 
-            border-radius: 25px; 
+            border-radius: 9999px; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             min-height: 44px;
             font-weight: 600;
-            position: relative;
-            overflow: hidden;
         }
         
         button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            display: none;
         }
         
         button:hover::before {
-            width: 300px;
-            height: 300px;
+            display: none;
         }
         
         .btn { 
-            padding: 0.8rem 1.4rem; 
+            padding: 0.8rem 1.6rem; 
             font-size: 1rem; 
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color)); 
+            background: var(--primary-color); 
             color: white; 
-            box-shadow: var(--shadow-sm);
-            border: 2px solid transparent;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            border-radius: 9999px;
         }
         
         .btn:hover { 
-            background: linear-gradient(45deg, var(--primary-hover), var(--primary-color)); 
-            transform: translateY(-3px) scale(1.05); 
-            box-shadow: var(--shadow-md); 
+            background: var(--primary-hover); 
+            transform: translateY(-2px); 
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4); 
         }
         
         .btn-secondary { 
-            background: linear-gradient(45deg, #FFC0CB, #FFB6C1); 
-            color: white; 
+            background: white; 
+            color: var(--primary-color);
+            border: 2px solid var(--border-color);
         }
         
         .btn-icon { 
-            background: rgba(255, 255, 255, 0.9); 
-            color: var(--primary-color); 
+            background: white; 
+            color: var(--text-primary); 
             font-size: 1.2rem; 
             padding: 0.6rem; 
-            border-radius: 50%; 
+            border-radius: 9999px; 
             width: 44px; 
             height: 44px; 
             border: 2px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
         .btn-icon:hover { 
-            background: var(--accent-color); 
-            transform: scale(1.1) rotate(10deg);
+            background: var(--bg-primary); 
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
         .btn-icon.active { 
             background: var(--primary-color); 
             color: white; 
-            animation: pulse 2s infinite;
+            border-color: var(--primary-color);
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 105, 180, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
         }
 
-        /* --- 激活界面可爱风格 --- */
+        /* --- 激活界面现代极简风格 --- */
         .activation-screen {
             position: fixed; 
             top: 0; 
             left: 0; 
             width: 100%; 
             height: 100%;
-            background: linear-gradient(135deg, #FF69B4 0%, #FFB6C1 50%, #FFC0CB 100%);
+            background: #EFF1F5;
             display: flex; 
             justify-content: center; 
             align-items: center; 
             z-index: 10000;
-            animation: fadeIn 0.8s ease-out;
+            animation: fadeIn 0.6s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
+            from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
         }
         
         .activation-card {
             background: white; 
-            border-radius: 20px; 
-            padding: 2.5rem;
-            box-shadow: var(--shadow-lg); 
+            border-radius: 24px; 
+            padding: 3rem 2.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08); 
             max-width: 400px; 
             width: 90%;
             text-align: center;
-            border: 3px solid var(--accent-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .activation-card::before {
-            content: '🌸';
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            font-size: 80px;
-            opacity: 0.1;
-            transform: rotate(-15deg);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
         
         .activation-card h2 { 
-            margin-bottom: 1.5rem; 
-            color: var(--primary-color); 
-            font-size: 1.5rem; 
+            margin-bottom: 2rem; 
+            color: var(--text-primary); 
+            font-size: 1.75rem; 
         }
         
         .activation-input {
             width: 100%; 
-            padding: 1rem; 
-            border: 3px solid var(--border-color);
-            border-radius: 25px; 
+            padding: 1rem 1.25rem; 
+            border: 2px solid var(--border-color);
+            border-radius: 12px; 
             font-size: 1rem; 
             margin-bottom: 1rem;
             transition: all 0.3s;
-            background: rgba(255, 255, 255, 0.9);
+            background: #FAFAFA;
         }
         
         .activation-input:focus { 
             outline: none; 
             border-color: var(--primary-color); 
-            box-shadow: 0 0 0 5px rgba(255, 105, 180, 0.2); 
-            transform: scale(1.02);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
         
         .activation-error {
-            color: #FF1493; 
+            color: #EF4444; 
             font-size: 0.9rem; 
             margin-bottom: 1rem;
             display: none; 
             padding: 0.8rem; 
-            background: rgba(255, 20, 147, 0.1); 
-            border-radius: 15px;
-            border: 2px solid #FF1493;
+            background: rgba(239, 68, 68, 0.1); 
+            border-radius: 12px;
+            border: 2px solid rgba(239, 68, 68, 0.2);
         }
         
         .activation-success {
-            color: #FF69B4; 
+            color: #10B981; 
             font-size: 0.9rem; 
             margin-bottom: 1rem;
             display: none; 
             padding: 0.8rem; 
-            background: rgba(255, 105, 180, 0.1); 
-            border-radius: 15px;
-            border: 2px solid var(--border-color);
+            background: rgba(16, 185, 129, 0.1); 
+            border-radius: 12px;
+            border: 2px solid rgba(16, 185, 129, 0.2);
         }
         
         .activation-info {
@@ -219,137 +331,25 @@
             margin-top: 1.5rem; 
             line-height: 1.5;
             padding: 1rem;
-            background: rgba(255, 182, 193, 0.1);
-            border-radius: 15px;
+            background: #FAFAFA;
+            border-radius: 12px;
         }
 
-        /* --- 主界面可爱风格 --- */
+        /* --- 上传界面现代极简风格 --- */
         .home-screen {
             display: none;
             min-height: 100vh;
-            flex-direction: column;
-            background: linear-gradient(135deg, #FFB6C1 0%, #FFC0CB 50%, #FFD1DC 100%);
-            padding: 2rem 1rem;
+            background: #EFF1F5;
             position: relative;
-            overflow: hidden;
-        }
-
-        .home-screen::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50" font-size="100" fill="rgba(255,255,255,0.05)">🌸</text></svg>');
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        .home-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: white;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .home-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-        
-        .home-header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-        .home-upload-container {
-            flex: 1;
-            display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .home-upload-area {
-            background: white;
-            border-radius: 25px; 
-            padding: 4rem 3rem;
-            text-align: center; 
-            box-shadow: var(--shadow-lg); 
-            max-width: 500px;
-            width: 100%;
-            cursor: pointer; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 3px dashed var(--primary-color);
-            position: relative;
-            overflow: hidden;
         }
 
-        .home-upload-area::before {
-            content: '📸';
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 30px;
-            opacity: 0.3;
-        }
-        
-        .home-upload-area:hover {
-            transform: translateY(-8px) scale(1.02); 
-            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3); 
-            background: rgba(255, 255, 255, 0.95);
-            border-color: var(--primary-hover);
-        }
-        
-        .home-upload-area.dragover {
-            background: rgba(255, 105, 180, 0.1); 
-            border-color: var(--primary-hover);
-            transform: scale(1.05);
-        }
-        
-        .upload-icon {
-            font-size: 4rem;
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            animation: pulse 2s infinite;
-        }
-        
-        .upload-text {
-            font-size: 1.3rem;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .upload-subtext {
-            font-size: 1rem;
-            color: var(--text-secondary);
-        }
-
-        /* --- 应用界面可爱风格 --- */
+        /* --- 应用界面现代极简风格 --- */
         .app-screen {
             display: none;
             min-height: 100vh;
-            background: var(--bg-primary);
+            background: #EFF1F5;
         }
         
         .app-header {
@@ -357,10 +357,10 @@
             top: 0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
             padding: 1rem;
             z-index: 100;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
         
         .app-header-content {
@@ -374,14 +374,13 @@
         }
         
         .app-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: var(--primary-color);
-            text-shadow: 1px 1px 2px rgba(255, 105, 180, 0.2);
+            color: var(--text-primary);
         }
         
         .app-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
             margin-top: 0.25rem;
             max-width: 400px;
@@ -428,28 +427,31 @@
         }
         
         .section-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
-            color: var(--primary-color);
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
         }
         
         .section-title::before {
-            content: '💕';
-            margin-right: 10px;
-            font-size: 1.2em;
+            display: none;
         }
         
-        /* --- 上传区域可爱风格 --- */
+        /* --- 上传区域现代极简风格 --- */
         .upload-area {
-            border: 3px dashed var(--primary-color); 
-            border-radius: var(--radius); 
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
             padding: 2rem;
-            text-align: center; 
+            text-align: center;
+            cursor: pointer;
+            background: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        } 
             cursor: pointer; 
             transition: all 0.3s;
             background: rgba(255, 182, 193, 0.05);
@@ -479,53 +481,35 @@
         .brand-btn {
             padding: 1rem;
             border: 2px solid var(--border-color);
-            background: linear-gradient(45deg, rgba(255, 182, 193, 0.1), rgba(255, 192, 203, 0.1));
-            border-radius: 15px;
+            background: white;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            transition: all 0.3s;
-            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
             text-align: center;
             position: relative;
             overflow: hidden;
         }
         
         .brand-btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 105, 180, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            opacity: 0;
-        }
-        
-        .brand-btn:hover::before {
-            animation: shimmer 0.5s ease-in-out;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+            display: none;
         }
         
         .brand-btn:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-color: var(--primary-color);
+        }
             border-color: var(--primary-color);
         }
         
         .brand-btn.active {
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
-            box-shadow: var(--shadow-md);
-            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
         
         /* --- 颜色预设可爱风格 --- */
@@ -538,12 +522,12 @@
         .preset-btn { 
             padding: 1rem; 
             border: 2px solid var(--border-color); 
-            background: linear-gradient(45deg, rgba(255, 182, 193, 0.1), rgba(255, 192, 203, 0.1)); 
-            border-radius: 15px; 
+            background: white;
+            border-radius: 12px; 
             cursor: pointer; 
-            font-size: 0.95rem; 
-            transition: all 0.3s;
-            box-shadow: var(--shadow-sm);
+            font-size: 0.9rem; 
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
             text-align: center;
             font-weight: 500;
             position: relative;
@@ -551,34 +535,20 @@
         }
         
         .preset-btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 105, 180, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            opacity: 0;
-        }
-        
-        .preset-btn:hover::before {
-            animation: shimmer 0.5s ease-in-out;
+            display: none;
         }
         
         .preset-btn:hover {
-            transform: translateY(-3px) scale(1.05); 
-            box-shadow: var(--shadow-md); 
+            transform: translateY(-2px); 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
             border-color: var(--primary-color);
         }
         
         .preset-btn.active { 
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color)); 
+            background: var(--primary-color); 
             color: white; 
             border-color: var(--primary-color);
-            box-shadow: var(--shadow-md);
-            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
         
         .custom-color-grid {
@@ -654,27 +624,27 @@
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: var(--primary-color);
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(255, 105, 180, 0.3);
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
             transition: all 0.3s;
         }
 
         .slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.4);
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
         }
         
         .slider::-moz-range-thumb {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
             background: var(--primary-color);
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(255, 105, 180, 0.3);
+            box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
             transition: all 0.3s;
         }
         
@@ -683,9 +653,9 @@
             text-align: center;
             font-weight: 600;
             color: var(--primary-color);
-            background: rgba(255, 105, 180, 0.1);
+            background: rgba(59, 130, 246, 0.1);
             padding: 0.5rem;
-            border-radius: 15px;
+            border-radius: 8px;
         }
         
         /* 新增：手动输入框样式 */
@@ -694,12 +664,14 @@
             padding: 0.5rem;
             border: 2px solid var(--border-color);
             border-radius: 15px;
-            font-size: 1rem; /* 修复：增大字体防止iOS缩放 */
+            font-size: 0.9rem;
             font-weight: 600;
             text-align: center;
             background: rgba(255, 255, 255, 0.9);
             color: var(--primary-color);
             transition: all 0.3s;
+            /* 修复：移动端字体大小防止缩放 */
+            font-size: 16px !important;
             /* 移除干扰属性 */
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -709,11 +681,9 @@
         .slider-input:focus {
             outline: none; 
             border-color: var(--primary-color); 
-            box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.2);
-            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
         
-        /* 修复：图纸尺寸输入框样式 - 重写 */
         .size-inputs { 
             display: grid; 
             grid-template-columns: 1fr auto 1fr; 
@@ -722,21 +692,15 @@
         }
         
         .size-inputs input { 
-            padding: 0.8rem 1rem; 
+            padding: 0.8rem; 
             border: 2px solid var(--border-color); 
             border-radius: 15px;
-            font-size: 1.2rem; /* 修复：增大字体防止iOS缩放 */
-            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
             text-align: center;
             background: rgba(255, 255, 255, 0.9);
             /* 修复：移动端字体大小防止缩放 */
-            -webkit-text-size-adjust: 100%;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            /* 修复：iOS特殊处理 */
-            -webkit-user-select: text;
-            user-select: text;
+            font-size: 16px !important;
         }
         
         .size-inputs input:focus {
@@ -901,7 +865,7 @@
         .edit-mode-screen {
             display: none;
             min-height: 100vh;
-            background: var(--bg-primary);
+            background: #EFF1F5;
             flex-direction: column;
         }
         
@@ -910,10 +874,10 @@
             top: 0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
             padding: 1rem;
             z-index: 100;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
         
         .edit-mode-header-content {
@@ -927,14 +891,14 @@
         }
         
         .edit-mode-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            color: var(--primary-color);
+            color: var(--text-primary);
         }
         
         .edit-mode-canvas-container {
             flex: 1;
-            background: linear-gradient(135deg, #FFF0F5 0%, #FFE4E1 100%);
+            background: #EFF1F5;
             padding: 2rem;
             display: flex;
             flex-direction: column;
@@ -949,10 +913,10 @@
             left: 0;
             right: 0;
             background: rgba(255, 255, 255, 0.98);
-            border-top: 2px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
             padding: 1rem;
             z-index: 998;
-            box-shadow: 0 -4px 20px rgba(255, 105, 180, 0.15);
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.06);
             backdrop-filter: blur(10px);
             height: var(--tools-height);
             max-height: 15vh;
@@ -977,7 +941,7 @@
         .edit-tool-label {
             font-size: 0.9rem;
             font-weight: 600;
-            color: var(--primary-color);
+            color: var(--text-primary);
             margin-bottom: 0.5rem;
         }
         
@@ -1032,17 +996,19 @@
         }
         
         .action-btn.hide {
-            background: linear-gradient(45deg, #FFC0CB, #FFB6C1);
-            color: white;
+            background: white;
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
         }
         
         .action-btn.clear {
-            background: var(--border-color);
+            background: white;
             color: var(--text-primary);
+            border: 2px solid var(--border-color);
         }
         
         .action-btn.download {
-            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            background: var(--primary-color);
             color: white;
             grid-column: span 3;
         }
@@ -1377,10 +1343,6 @@
                 font-size: 2rem;
             }
             
-            .home-upload-area {
-                padding: 2rem 1.5rem;
-            }
-            
             .app-header-content {
                 flex-direction: column;
                 text-align: center;
@@ -1486,18 +1448,6 @@
                 font-size: 1.5rem;
             }
             
-            .home-upload-area {
-                padding: 1.5rem 1rem;
-            }
-            
-            .upload-icon {
-                font-size: 3rem;
-            }
-            
-            .upload-text {
-                font-size: 1.1rem;
-            }
-            
             .main-content {
                 padding: 1rem 0.5rem;
             }
@@ -1545,10 +1495,6 @@
                 width: 70px;
                 font-size: 16px !important; /* 保持16px防止iOS缩放 */
                 padding: 0.4rem;
-            }
-            
-            .size-inputs input {
-                font-size: 16px !important; /* 保持16px防止iOS缩放 */
             }
         }
 
@@ -1625,17 +1571,40 @@
 
 <!-- Home Screen (Upload Only) -->
 <div class="home-screen" id="home-screen">
-    <div class="home-header">
-        <h1>🌸 拼豆图纸生成器-西瓜哥制作 🌸</h1>
-        <p>专业的拼豆图案制作工具，集市面顶尖拼豆转换技术于一体的程序</p>
-    </div>
-    <div class="home-upload-container">
-        <div class="home-upload-area" id="home-upload-area">
-            <div class="upload-icon">📸</div>
-            <div class="upload-text">点击上传图片</div>
-            <div class="upload-subtext">支持 JPG、PNG、GIF 格式，或拖拽图片到此处</div>
-            <input type="file" id="home-file-input" accept="image/*">
+    <div class="phone-container">
+        <!-- 核心内容 -->
+        <div class="content">
+            <!-- 像素Logo -->
+            <div class="logo-container">
+                <div class="pixel-art-wrapper">
+                    <div class="pixel-watermelon"></div>
+                </div>
+            </div>
+            
+            <!-- 大标题 -->
+            <h1>西瓜拼豆</h1>
+            
+            <!-- 副标题 -->
+            <p class="subtitle">享受拼图乐趣，畅享拼豆人生</p>
         </div>
+
+        <!-- 底部蓝色按钮 - 触发文件上传 -->
+        <div class="bottom-area">
+            <div class="start-btn" id="home-upload-trigger">
+                <!-- 加号图标 -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                开始创作
+            </div>
+        </div>
+
+        <!-- 隐藏的文件输入 -->
+        <input type="file" id="home-file-input" accept="image/*" style="display: none;">
+
+        <!-- 底部 Home 条 -->
+       
     </div>
 </div>
 
@@ -1644,8 +1613,8 @@
     <header class="app-header">
         <div class="app-header-content">
             <div>
-                <div class="app-title">拼豆图纸生成器-西瓜哥制作</div>
-                <div class="app-subtitle">目前仅授权于淘宝店铺：大师精品资料 版权均已登记 如有发现倒卖者，请联系我们</div>
+                <div class="app-title">西瓜拼豆</div>
+                <div class="app-subtitle">目前仅授权于淘宝店铺：西瓜拼豆生成器 版权均已登记 如有发现倒卖者，请联系我们</div>
             </div>
             <div class="header-controls">
                 <button class="btn-icon" id="new-image-btn" title="上传新图片">📷</button>
@@ -2423,7 +2392,7 @@ const MARD_COLOR_PRESETS = {
     '入门10色': ['H7', 'A6', 'B1', 'C3', 'D6', 'E3', 'F5', 'G1', 'H17', 'R1'],
     '标准20色': ['H7', 'A6', 'B1', 'C3', 'D6', 'E3', 'F5', 'G1', 'H17', 'R1', 'A13', 'B5', 'C5', 'D9', 'E9', 'F13', 'P1', 'Y1', 'Y4'],
     '进阶30色': ['H7', 'A6', 'B1', 'C3', 'D6', 'E3', 'F5', 'G1', 'H17', 'R1', 'A13', 'B5', 'C5', 'D9', 'E9', 'F13', 'P1', 'Y1', 'Y4', 'A1','B2','C4','D7','E2','F4','G2','M1','R2'],
-    '专业50色': ['H7', 'A6', 'B1', 'C3', 'D6', 'E3', 'F5', 'G1', 'H17', 'R1', 'A13', 'B5', 'C5', 'D9', 'E9', 'F13', 'P1', 'Y1', 'Y4', 'A1','B2','C4','D7','E2','F4','G2','M1','R2', 'A2','B3','C6','D8','E4','F6','G3','M2','R3','P2','A3','B4','C7','D9','E5','F7','G4','M3','R3','P3'],
+    '专业50色': ['H7', 'A6', 'B1', 'C3', 'D6', 'E3', 'F5', 'G1', 'H17', 'R1', 'A13', 'B5', 'C5', 'D9', 'E9', 'F13', 'P1', 'Y1', 'Y4', 'A1','B2','C4','D7','E2','F4','G2','M1','R2', 'A2','B3','C6','D8','E4','F6','G3','M2','R3','P2','A3','B4','C7','D9','E5','F7','G4','M3','R4','P4'],
     '大师100色': ['T1', 'H7', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H8', 'H9', 'A1', 'A2', "A3", "A4", "A5", "A6", "A7", "A8", "A9", "A10", "A11", "A12", "A13", "A14", "A15", "B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8", "B9", "B10", "B11", "B12", "B13", "B14", "B15", "B16", "B17", "B18", "B19", "B20", "C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "C11", "C12", "C13", "C14", "C15", "C16", "C17", "C18", "C19", "C20", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "D11", "D12", "D13", "D14", "D15"],
     '标准221色': ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13', 'A14', 'A15', 'A16', 'A17', 'A18', 'A19', 'A20', 'A21', 'A22', 'A23', 'A24', 'A25', 'A26', 'B1', 'B2', 'B3', 'B4', 'B5', 'B6', 'B7', 'B8', 'B9', 'B10', 'B11', 'B12', 'B13', 'B14', 'B15', 'B16', 'B17', 'B18', 'B19', 'B20', 'B21', 'B22', 'B23', 'B24', 'B25', 'B26', 'B27', 'B28', 'B29', 'B30', 'B31', 'B32', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20', 'C21', 'C22', 'C23', 'C24', 'C25', 'C26', 'C27', 'C28', 'C29', 'D1', 'D2', 'D3', 'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'D11', 'D12', 'D13', 'D14', 'D15', 'D16', 'D17', 'D18', 'D19', 'D20', 'D21', 'D22', 'D23', 'D24', 'D25', 'D26', 'E1', 'E2', 'E3', 'E4', 'E5', 'E6', 'E7', 'E8', 'E9', 'E10', 'E11', 'E12', 'E13', 'E14', 'E15', 'E16', 'E17', 'E18', 'E19', 'E20', 'E21', 'E22', 'E23', 'E24', 'F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8', 'F9', 'F10', 'F11', 'F12', 'F13', 'F14', 'F15', 'F16', 'F17', 'F18', 'F19', 'F20', 'F21', 'F22', 'F23', 'F24', 'F25', 'G1', 'G2', 'G3', 'G4', 'G5', 'G6', 'G7', 'G8', 'G9', 'G10', 'G11', 'G12', 'G13', 'G14', 'G15', 'G16', 'G17', 'G18', 'G19', 'G20', 'G21', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'H7', 'H8', 'H9', 'H10', 'H11', 'H12', 'H13', 'H14', 'H15', 'H16', 'H17', 'H18', 'H19', 'H20', 'H21', 'H22', 'H23', 'M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'M10', 'M11', 'M12', 'M13', 'M14', 'M15'],
     '全色系291色': ALL_COLOR_KEYS.MARD
@@ -4112,9 +4081,9 @@ const handleFile = (file) => {
 
 // --- Event Listeners ---
 
-// 修复：全新的图纸尺寸输入处理器 - 解决iOS和Android的问题
+// 新增：尺寸输入框处理器 - 修复核心问题
 function initializeSizeInputs() {
-    console.log('初始化图纸尺寸输入处理器');
+    console.log('初始化尺寸输入框处理器');
     
     const widthInput = document.getElementById('width-input');
     const heightInput = document.getElementById('height-input');
@@ -4125,45 +4094,27 @@ function initializeSizeInputs() {
         return;
     }
     
-    // 保存原始值作为回退
-    widthInput.dataset.defaultValue = widthInput.value;
-    heightInput.dataset.defaultValue = heightInput.value;
-    
-    // 修复：只在失去焦点时验证值
-    function validateAndProcessSize(input) {
-        let value = input.value.trim();
-        
-        // 如果为空，恢复默认值
-        if (value === '') {
-            value = input.dataset.defaultValue;
-            input.value = value;
+    // 验证输入值
+    function validateSizeValue(value, min = 10, max = 200) {
+        const numValue = parseInt(value);
+        if (isNaN(numValue) || numValue < min) {
+            return min;
         }
-        
-        // 转换为数字并验证范围
-        let numValue = parseInt(value);
-        if (isNaN(numValue) || numValue < 10) {
-            numValue = 10;
-        } else if (numValue > 200) {
-            numValue = 200;
+        if (numValue > max) {
+            return max;
         }
-        
-        // 只有当值真的改变了才更新
-        if (parseInt(value) !== numValue) {
-            input.value = numValue;
-        }
-        
         return numValue;
     }
     
     // 处理尺寸变化
     function handleSizeChange() {
-        console.log('尺寸输入处理');
+        console.log('尺寸输入变化');
         
         // 验证并修正值
-        const width = validateAndProcessSize(widthInput);
-        const height = validateAndProcessSize(heightInput);
+        widthInput.value = validateSizeValue(widthInput.value);
+        heightInput.value = validateSizeValue(heightInput.value);
         
-        console.log(`验证后尺寸: ${width} x ${height}`);
+        console.log(`新尺寸: ${widthInput.value} x ${heightInput.value}`);
         
         // 如果有图片，自动重新处理
         if (state.originalImage) {
@@ -4171,117 +4122,91 @@ function initializeSizeInputs() {
         }
     }
     
-    // 为输入框添加事件监听器
-    widthInput.addEventListener('focus', function() {
-        // iOS特殊处理：获取焦点时不自动全选
-        if (state.isMobile && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            // iOS设备延迟选择
-            setTimeout(() => {
-                this.select();
-            }, 100);
-        }
-    });
-    
-    heightInput.addEventListener('focus', function() {
-        // iOS特殊处理：获取焦点时不自动全选
-        if (state.isMobile && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            // iOS设备延迟选择
-            setTimeout(() => {
-                this.select();
-            }, 100);
-        }
-    });
-    
-    // 输入事件 - 只记录但不验证
+    // 为宽度输入框添加事件监听器
     widthInput.addEventListener('input', function() {
         console.log('宽度输入:', this.value);
-        // 不在这里验证，允许用户输入空值
+        // 延迟处理，避免频繁触发
+        clearTimeout(widthInput.dataset.timeout);
+        widthInput.dataset.timeout = setTimeout(handleSizeChange, 500);
     });
     
-    heightInput.addEventListener('input', function() {
-        console.log('高度输入:', this.value);
-        // 不在这里验证，允许用户输入空值
+    widthInput.addEventListener('change', function() {
+        console.log('宽度确认:', this.value);
+        clearTimeout(widthInput.dataset.timeout);
+        handleSizeChange();
     });
     
-    // 失去焦点时验证
     widthInput.addEventListener('blur', function() {
         console.log('宽度失去焦点:', this.value);
-        validateAndProcessSize(this);
+        clearTimeout(widthInput.dataset.timeout);
+        handleSizeChange();
+    });
+    
+    // 为高度输入框添加事件监听器
+    heightInput.addEventListener('input', function() {
+        console.log('高度输入:', this.value);
+        // 延迟处理，避免频繁触发
+        clearTimeout(heightInput.dataset.timeout);
+        heightInput.dataset.timeout = setTimeout(handleSizeChange, 500);
+    });
+    
+    heightInput.addEventListener('change', function() {
+        console.log('高度确认:', this.value);
+        clearTimeout(heightInput.dataset.timeout);
         handleSizeChange();
     });
     
     heightInput.addEventListener('blur', function() {
         console.log('高度失去焦点:', this.value);
-        validateAndProcessSize(this);
+        clearTimeout(heightInput.dataset.timeout);
         handleSizeChange();
     });
     
-    // 回车键处理
-    widthInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            this.blur();
-        }
-    });
-    
-    heightInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            this.blur();
-        }
-    });
-    
-    // 生成按钮事件
+    // 为生成按钮添加点击事件（确保它存在）
     generateBtn.onclick = function() {
         console.log('生成按钮被点击');
         
         // 验证尺寸
-        const width = validateAndProcessSize(widthInput);
-        const height = validateAndProcessSize(heightInput);
+        widthInput.value = validateSizeValue(widthInput.value);
+        heightInput.value = validateSizeValue(heightInput.value);
         
         if (!state.originalImage) {
             alert('请先上传图片！');
             return;
         }
         
-        console.log('开始生成图纸，尺寸:', width, 'x', height);
+        console.log('开始生成图纸，尺寸:', widthInput.value, 'x', heightInput.value);
         processImage();
     };
     
     // 移动端特殊处理
-    if (state.isMobile) {
-        // 设置正确的input类型
-        widthInput.type = 'tel';
-        heightInput.type = 'tel';
-        
-        // iOS特殊处理：防止缩放
+    if ('ontouchstart' in window) {
+        // 防止iOS缩放
         widthInput.style.fontSize = '16px';
         heightInput.style.fontSize = '16px';
         
-        // iOS特殊处理：增强触摸响应
-        if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            widthInput.addEventListener('touchstart', function(e) {
-                e.stopPropagation();
-                setTimeout(() => {
-                    this.select();
-                }, 50);
-            }, { passive: true });
-            
-            heightInput.addEventListener('touchstart', function(e) {
-                e.stopPropagation();
-                setTimeout(() => {
-                    this.select();
-                }, 50);
-            }, { passive: true });
-        }
+        // 触摸事件
+        widthInput.addEventListener('touchstart', function(e) {
+            // 延迟一下防止与滑动条冲突
+            setTimeout(() => {
+                this.select();
+            }, 100);
+        }, { passive: true });
         
-        // 处理iOS输入法
+        heightInput.addEventListener('touchstart', function(e) {
+            setTimeout(() => {
+                this.select();
+            }, 100);
+        }, { passive: true });
+        
+        // 处理移动端输入法
         widthInput.addEventListener('compositionstart', function() {
             this.dataset.composing = 'true';
         });
         
         widthInput.addEventListener('compositionend', function() {
             this.dataset.composing = 'false';
+            setTimeout(handleSizeChange, 100);
         });
         
         heightInput.addEventListener('compositionstart', function() {
@@ -4290,41 +4215,50 @@ function initializeSizeInputs() {
         
         heightInput.addEventListener('compositionend', function() {
             this.dataset.composing = 'false';
+            setTimeout(handleSizeChange, 100);
         });
     }
     
-    // 输入验证 - 只允许数字和删除键
-    function handleKeydown(e) {
-        // 允许数字、删除键、方向键、Tab键、退格键
+    // 输入验证 - 只允许数字
+    widthInput.addEventListener('keydown', function(e) {
+        // 允许数字、退格、删除、方向键、Tab键
         const allowedKeys = [
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
             'Tab', 'Home', 'End'
         ];
         
-        // 在iOS上允许全选键组合
-        if (state.isMobile && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            allowedKeys.push('a', 'A', 'x', 'X', 'c', 'C', 'v', 'V');
-        }
-        
-        if (!allowedKeys.includes(e.key) && !e.ctrlKey && !e.metaKey) {
+        if (!allowedKeys.includes(e.key)) {
             e.preventDefault();
         }
-    }
+    });
     
-    widthInput.addEventListener('keydown', handleKeydown);
-    heightInput.addEventListener('keydown', handleKeydown);
+    heightInput.addEventListener('keydown', function(e) {
+        const allowedKeys = [
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown',
+            'Tab', 'Home', 'End'
+        ];
+        
+        if (!allowedKeys.includes(e.key)) {
+            e.preventDefault();
+        }
+    });
     
     // 防止粘贴非数字内容
-    function handlePaste(e) {
+    widthInput.addEventListener('paste', function(e) {
         e.preventDefault();
         const pasteData = (e.clipboardData || window.clipboardData).getData('text');
         const numbers = pasteData.replace(/[^0-9]/g, '');
         document.execCommand('insertText', false, numbers);
-    }
+    });
     
-    widthInput.addEventListener('paste', handlePaste);
-    heightInput.addEventListener('paste', handlePaste);
+    heightInput.addEventListener('paste', function(e) {
+        e.preventDefault();
+        const pasteData = (e.clipboardData || window.clipboardData).getData('text');
+        const numbers = pasteData.replace(/[^0-9]/g, '');
+        document.execCommand('insertText', false, numbers);
+    });
     
     console.log('尺寸输入框处理器初始化完成');
 }
@@ -4950,7 +4884,7 @@ const downloadPattern = (isEditMode = false) => {
         ctx.fillStyle = '#666';
         ctx.textAlign = 'center';
         ctx.fillText('拼豆图纸生成器-西瓜哥制作', canvas.width/2, canvas.height - 60);
-        ctx.fillText('版权已登记，仅授权于淘宝店铺：大师精品资料', canvas.width/2, canvas.height - 35);
+        ctx.fillText('版权已登记，仅授权于淘宝店铺：西瓜拼豆生成器', canvas.width/2, canvas.height - 35);
         
         // 下载画布
         const link = document.createElement('a');
@@ -4979,6 +4913,50 @@ function countMergedRegions(originalData, mergedData) {
     return count;
 }
 
+// 修复：确保输入框样式支持移动端
+function fixInputStyles() {
+    const inputs = document.querySelectorAll('.slider-input');
+    inputs.forEach(input => {
+        // 防止iOS自动缩放
+        input.style.fontSize = '16px';
+        
+        // 确保输入框可以获得焦点
+        input.setAttribute('autocomplete', 'off');
+        input.setAttribute('autocorrect', 'off');
+        input.setAttribute('autocapitalize', 'off');
+        input.setAttribute('spellcheck', 'false');
+        
+        // 设置input类型为tel，在移动端会弹出数字键盘
+        if (input.type !== 'number') {
+            input.type = 'tel';
+        }
+        
+        // 移除可能干扰的pattern属性
+        input.removeAttribute('pattern');
+    });
+}
+
+// 在DOM加载完成后修复输入框样式
+document.addEventListener('DOMContentLoaded', function() {
+    // 延迟一下确保所有元素都已加载
+    setTimeout(fixInputStyles, 500);
+});
+
+// 在初始化增强滑动条后也修复样式
+window.addEventListener('load', function() {
+    setTimeout(fixInputStyles, 100);
+});
+
+// 修复下载功能 - 使用新建文本文档中的下载代码
+// 统一的下载函数 - 修复编辑模式下载功能
+document.getElementById('download-btn')?.addEventListener('click', () => {
+    downloadPattern(false);
+});
+
+document.getElementById('edit-download-btn')?.addEventListener('click', () => {
+    downloadPattern(true);
+});
+
 // 初始化主事件监听器
 document.addEventListener('DOMContentLoaded', function() {
     console.log('=== 页面加载完成，开始初始化 ===');
@@ -4999,13 +4977,13 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeEnhancedSliders();
     
     // Home screen upload
-    const homeUploadArea = document.getElementById('home-upload-area');
+    const homeUploadTrigger = document.getElementById('home-upload-trigger');
     const homeFileInput = document.getElementById('home-file-input');
     
-    if (homeUploadArea && homeFileInput) {
-        // 点击上传
-        homeUploadArea.addEventListener('click', () => {
-            console.log('点击上传区域');
+    if (homeUploadTrigger && homeFileInput) {
+        // 点击开始创作按钮，触发文件上传
+        homeUploadTrigger.addEventListener('click', () => {
+            console.log('点击开始创作按钮');
             homeFileInput.click();
         });
         
@@ -5014,24 +4992,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('文件选择变化', e.target.files);
             if (e.target.files && e.target.files[0]) {
                 handleFile(e.target.files[0]);
-            }
-        });
-        
-        // 拖拽上传
-        homeUploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            homeUploadArea.classList.add('dragover');
-        });
-        
-        homeUploadArea.addEventListener('dragleave', () => {
-            homeUploadArea.classList.remove('dragover');
-        });
-        
-        homeUploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            homeUploadArea.classList.remove('dragover');
-            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                handleFile(e.dataTransfer.files[0]);
             }
         });
     }
