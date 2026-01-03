@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -1339,6 +1340,31 @@
 
         /* --- 响应式设计 --- */
         @media (max-width: 768px) {
+            /* Home screen 移动端自适应 - 全屏显示 */
+            .phone-container {
+                width: 100vw;
+                min-height: 100vh;
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .home-screen {
+                align-items: stretch;
+                justify-content: flex-start;
+                background: linear-gradient(180deg, #F0F6FF 0%, #FFFFFF 60%, #FFFFFF 100%);
+            }
+
+            .content {
+                padding: 2rem 1.5rem;
+            }
+
+            .logo-container {
+                width: 140px;
+                height: 140px;
+                margin-bottom: 2rem;
+            }
+
             .home-header h1 {
                 font-size: 2rem;
             }
@@ -1444,6 +1470,47 @@
         }
         
         @media (max-width: 480px) {
+            /* 小屏幕进一步优化 */
+            .phone-container {
+                width: 100vw;
+                min-height: 100vh;
+                border-radius: 0;
+                box-shadow: none;
+            }
+
+            .home-screen {
+                padding: 0;
+            }
+
+            .content {
+                padding: 1.5rem 1rem;
+            }
+
+            .logo-container {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 1.5rem;
+            }
+
+            .content h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                max-width: 100%;
+                font-size: 0.85rem;
+            }
+
+            .bottom-area {
+                bottom: 30px;
+                padding: 0 1rem;
+            }
+
+            .start-btn {
+                padding: 0.9rem 2rem;
+                font-size: 1rem;
+            }
+
             .home-header h1 {
                 font-size: 1.5rem;
             }
@@ -1585,7 +1652,7 @@
             <h1>西瓜拼豆</h1>
             
             <!-- 副标题 -->
-            <p class="subtitle">享受拼图乐趣，畅享拼豆人生</p>
+            <p class="subtitle">享受拼图乐趣，品味豆香滋味</p>
         </div>
 
         <!-- 底部蓝色按钮 - 触发文件上传 -->
@@ -1604,7 +1671,7 @@
         <input type="file" id="home-file-input" accept="image/*" style="display: none;">
 
         <!-- 底部 Home 条 -->
-       
+        <div class="home-indicator"></div>
     </div>
 </div>
 
@@ -1614,7 +1681,7 @@
         <div class="app-header-content">
             <div>
                 <div class="app-title">西瓜拼豆</div>
-                <div class="app-subtitle">目前仅授权于淘宝店铺：西瓜拼豆生成器 版权均已登记 如有发现倒卖者，请联系我们</div>
+                <div class="app-subtitle">目前仅授权于淘宝店铺：大师精品资料 版权均已登记 如有发现倒卖者，请联系我们</div>
             </div>
             <div class="header-controls">
                 <button class="btn-icon" id="new-image-btn" title="上传新图片">📷</button>
@@ -4884,7 +4951,7 @@ const downloadPattern = (isEditMode = false) => {
         ctx.fillStyle = '#666';
         ctx.textAlign = 'center';
         ctx.fillText('拼豆图纸生成器-西瓜哥制作', canvas.width/2, canvas.height - 60);
-        ctx.fillText('版权已登记，仅授权于淘宝店铺：西瓜拼豆生成器', canvas.width/2, canvas.height - 35);
+        ctx.fillText('版权已登记，仅授权于淘宝店铺：大师精品资料', canvas.width/2, canvas.height - 35);
         
         // 下载画布
         const link = document.createElement('a');
